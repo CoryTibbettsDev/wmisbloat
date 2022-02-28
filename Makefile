@@ -1,23 +1,23 @@
-PROG := wmisbloat
-VERSION ?= 0.1
+PROG:=wmisbloat
+VERSION?=0.1
 
-RM ?= rm -f
-CP ?= cp -f
+RM?=rm -f
+CP?=cp -f
 
 PREFIX?=/usr/local
 DESTDIR?=
 BINDIR?=${DESTDIR}${PREFIX}/bin
 
-CFLAGS += -Wall
-CPPFLAGS += -DPROG="\"${PROG}\"" -DVERSION="\"${VERSION}\""
+CFLAGS+=-Wall
+CPPFLAGS+=-DPROG="\"${PROG}\"" -DVERSION="\"${VERSION}\""
 # Extra flags for debugging
-CFDEBUG = -g -pedantic -Wno-deprecated-declarations -Wunused-parameter -Wlong-long \
+CFDEBUG=-g -pedantic -Wno-deprecated-declarations -Wunused-parameter -Wlong-long \
 		Wsign-conversion -Wconversion -Wimplicit-function-declaration
 # Included libraries
-LDFLAGS += -lc -lxcb -lxcb-util# -lxcb-randr -lxcb-xinerama
+LDFLAGS+=-lc -lxcb -lxcb-util# -lxcb-randr -lxcb-xinerama
 
-SRC := main.c
-OBJ := ${SRC:.c=.o}
+SRC:=main.c
+OBJ:=${SRC:.c=.o}
 
 .PHONY: all clean install uninstall
 
@@ -31,7 +31,7 @@ ${PROG}: ${OBJ}
 	${CC} ${LDFLAGS} ${OBJ} -o ${PROG}
 
 # Cannot launch Xephyr from Makefile because of bug see README.md
-test: CFLAGS += ${CFDEBUG}
+test: CFLAGS+=${CFDEBUG}
 test: all
 	# X in Xephyr must be capitilized
 	# Xephyr -screen "1024x650" :1
